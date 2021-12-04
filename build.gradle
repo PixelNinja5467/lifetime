@@ -11,7 +11,10 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-
+	maven {
+		name = 'Ladysnake Mods'
+		url = 'https://ladysnake.jfrog.io/artifactory/mods'
+	}
 }
 
 dependencies {
@@ -20,6 +23,9 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	modApi "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cardinal_components_version}"
+	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cardinal_components_version}"
 }
 
 processResources {

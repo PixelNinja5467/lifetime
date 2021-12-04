@@ -4,9 +4,10 @@
   "package": "com.pixelninja.lifetime.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "PlayerEntityMixin",
+    "ServerPlayerEntityMixin"
   ],
   "client": [
-    "ExampleMixin"
   ],
   "injectors": {
     "defaultRequire": 1

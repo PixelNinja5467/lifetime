@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "com.pixelninja.lifetime.Lifetime"
+    ],
+    "cardinal-components-entity": [
+      "com.pixelninja.lifetime.Lifetime"
     ]
   },
   "mixins": [
@@ -34,5 +37,10 @@
   },
   "suggests": {
     "another-mod": "*"
+  },
+  "custom": {
+    "cardinal-components": [
+      "lifetime:time"
+    ]
   }
 }

@@ -11,5 +11,7 @@ public interface TimeComponent extends CommonTickingComponent {
     int getTime();
     void setTime(int time);
     void addTime(int time);
+    void subtractTime(int time);
+    void setPaused(boolean paused);
 
 }

@@ -30,4 +30,9 @@ public class TimeEssenceBottle extends Item {
         ((PlayerEntity)user).getInventory().insertStack(new ItemStack(Items.GLASS_BOTTLE));
         return super.finishUsing(stack, world, user);
     }
+
+    @Override
+    public int getMaxUseTime(ItemStack stack) {
+        return 40;
+    }
 }

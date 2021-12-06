@@ -21,9 +21,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 
     @Inject(method = "getPlayerListName", at = @At("HEAD"), cancellable = true)
     public void setName(CallbackInfoReturnable<Text> cir) {
-            int time = TimeComponent.KEY.get(this).getTime();
-            Text text = Text.of(getDisplayName().asString() + time);
-            cir.setReturnValue(text);
+            cir.setReturnValue(getDisplayName());
     }
 
 }

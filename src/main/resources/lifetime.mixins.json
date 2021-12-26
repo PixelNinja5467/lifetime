@@ -4,6 +4,8 @@
   "package": "com.pixelninja.lifetime.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "DamageSourceAccessor",
+    "InGameHudMixin",
     "PlayerEntityMixin",
     "ServerPlayerEntityMixin"
   ],

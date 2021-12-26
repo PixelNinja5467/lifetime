@@ -4,6 +4,7 @@ import com.pixelninja.lifetime.Lifetime;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
+import net.minecraft.text.Text;
 
 public interface TimeComponent extends CommonTickingComponent {
     ComponentKey<TimeComponent> KEY = ComponentRegistry.getOrCreate(Lifetime.identifier("time"), TimeComponent.class);
@@ -13,5 +14,6 @@ public interface TimeComponent extends CommonTickingComponent {
     void addTime(int time);
     void subtractTime(int time);
     void setPaused(boolean paused);
+    Text getTimeAsText();
 
 }

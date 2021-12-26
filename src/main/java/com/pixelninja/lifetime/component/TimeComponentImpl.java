@@ -3,6 +3,10 @@ package com.pixelninja.lifetime.component;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 public class TimeComponentImpl implements TimeComponent{
 
@@ -69,5 +73,29 @@ public class TimeComponentImpl implements TimeComponent{
         if (ticks % 20 == 0 && isCountingDown) {
             time--;
         }
+    }
+
+    @Override
+    public Text getTimeAsText() {
+        int seconds = time % 60;
+        int remainingMinutes = time / 60;
+        int minutes = remainingMinutes % 60;
+        int hours = remainingMinutes / 60;
+
+        String timeLeftString = hours + ":" + minutes + ":" + seconds;
+
+
+        Formatting color;
+        if (remainingMinutes < 15) {
+            color = Formatting.DARK_RED;
+        } else if (remainingMinutes > 15 && hours < 2) {
+            color = Formatting.GOLD;
+        } else {
+            color = Formatting.DARK_GREEN;
+        }
+
+        Text playerName = new LiteralText(entity.getName().asString()).setStyle(Style.EMPTY.withColor(Formatting.WHITE));
+        Text dash = new LiteralText(" - ").setStyle(Style.EMPTY.withColor(Formatting.BLACK));
+        return new LiteralText(timeLeftString).setStyle(Style.EMPTY.withColor(color)).append(dash).append(playerName);
     }
 }

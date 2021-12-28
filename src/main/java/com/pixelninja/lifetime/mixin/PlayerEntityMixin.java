@@ -10,6 +10,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.text.Texts;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
@@ -47,14 +48,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Timeout 
     private void timerRunout(CallbackInfo ci) {
         ticks++;
          if (ticks % 20 == 0) {
-            sendMessage(TimeComponent.KEY.get(this).getTimeAsText(), false);
+             Text playerName = new LiteralText(this.getName().asString()).setStyle(Style.EMPTY.withColor(Formatting.WHITE));
+             Text dash = new LiteralText(" - ").setStyle(Style.EMPTY.withColor(Formatting.BLACK));
+             //(timeLeftString).formatted(color).append(dash).append(playerName)
+             Text message = new LiteralText("").append(TimeComponent.KEY.get(this).getTimeAsText()).append(dash).append(playerName);
+             this.sendMessage(message, true);
         }
         if (TimeComponent.KEY.get(this).getTime() <= 0 && !timedOut) {
-            /*DamageSource damageSource = DamageSourceAccessor.createDamageSource("timeout");
-            ((DamageSourceAccessor)damageSource).setBypassesArmor(true);
-            this.damage(DamageSourceAccessor.createDamageSource("timeout"), 20.0f); */
-            Objects.requireNonNull(this.getServer()).sendSystemMessage(new LiteralText(this.getName().asString()).append(" ran out of time."), this.getUuid());
-            Objects.requireNonNull(this.getServer().getPlayerManager().getPlayer(this.getUuid())).changeGameMode(GameMode.SPECTATOR);
+            sendSystemMessage(new LiteralText(this.getName().asString()).append(" ran out of time.").formatted(Formatting.DARK_RED), this.getUuid());
+            Objects.requireNonNull(Objects.requireNonNull(this.getServer()).getPlayerManager().getPlayer(this.getUuid())).changeGameMode(GameMode.SPECTATOR);
             timedOut = true;
         }
     }

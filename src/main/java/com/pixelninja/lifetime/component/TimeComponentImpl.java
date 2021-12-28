@@ -10,19 +10,20 @@ import net.minecraft.util.Formatting;
 
 public class TimeComponentImpl implements TimeComponent{
 
-    private int time = 1;
-    private int ticks;
+    int time;
+    int ticks;
     PlayerEntity entity;
     boolean isCountingDown;
     boolean isPaused = true;
 
     public TimeComponentImpl(PlayerEntity entity) {
         this.entity = entity;
+        this.time = 1;
     }
 
     @Override
     public int getTime() {
-        return time;
+        return this.time;
     }
 
     @Override
@@ -55,7 +56,7 @@ public class TimeComponentImpl implements TimeComponent{
 
     @Override
     public void writeToNbt(NbtCompound tag) {
-        tag.putInt("Time", time);
+        tag.putInt("Time", getTime());
         tag.putInt("Ticks", ticks);
         tag.putBoolean("Paused", this.isPaused);
     }
@@ -65,9 +66,11 @@ public class TimeComponentImpl implements TimeComponent{
         if (!isPaused){
             ticks++;
         }
-        if (time == 0) {
+        if (getTime() == 0) {
             isCountingDown = false;
-        } else if (time > 0 && !isPaused) {
+        } else if (isPaused) {
+            isCountingDown = false;
+        } else if (time > 0) {
             isCountingDown = true;
         }
         if (ticks % 20 == 0 && isCountingDown) {
@@ -77,12 +80,12 @@ public class TimeComponentImpl implements TimeComponent{
 
     @Override
     public Text getTimeAsText() {
-        int seconds = time % 60;
-        int remainingMinutes = time / 60;
+        int seconds = getTime() % 60;
+        int remainingMinutes = getTime() / 60;
         int minutes = remainingMinutes % 60;
         int hours = remainingMinutes / 60;
 
-        String timeLeftString = hours + ":" + minutes + ":" + seconds;
+        String timeLeft = hours + ":" + minutes + ":" + seconds;
 
 
         Formatting color;
@@ -94,8 +97,8 @@ public class TimeComponentImpl implements TimeComponent{
             color = Formatting.DARK_GREEN;
         }
 
-        Text playerName = new LiteralText(entity.getName().asString()).setStyle(Style.EMPTY.withColor(Formatting.WHITE));
-        Text dash = new LiteralText(" - ").setStyle(Style.EMPTY.withColor(Formatting.BLACK));
-        return new LiteralText(timeLeftString).setStyle(Style.EMPTY.withColor(color)).append(dash).append(playerName);
+        return new LiteralText(timeLeft).formatted(color);
     }
+
+
 }
